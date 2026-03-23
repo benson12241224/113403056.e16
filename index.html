@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World 練習</title>
+    <title>Hello World 練習 - 圓點邊框</title>
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
@@ -11,7 +11,8 @@
             flex-direction: column;
             align-items: center;
             padding: 50px;
-            gap: 25px; /* 控制三個框框之間的距離 */
+            gap: 25px; /* 控制框框之間的距離 */
+            background-color: #f0f4f8; /* 加上與原圖一致的淡灰藍背景，讓框框更明顯 */
         }
 
         .box {
@@ -19,6 +20,8 @@
             padding: 15px;
             font-size: 28px;
             font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 加上原圖的陰影效果 */
+            position: relative; /* 這是為了底部圓點的定位 */
         }
 
         /* 第一個：雙線邊框 (Double Border) */
@@ -34,11 +37,42 @@
             border-radius: 20px;       /* 圓角效果 */
         }
 
-        /* 第三個：灰色圓點邊框 */
+        /* 第三個：完美灰色圓點邊框 + 綠色背景 */
         .bottom-box {
             background-color: #57a673; /* 綠色背景 */
-            border: 10px dotted #808080; /* 灰色點點 (Dotted 在現代瀏覽器會顯示為圓點) */
             color: #000;
+            border: none; /* 移除標準 CSS 邊框 */
+            /* 增加上下內邊距，為圓點留出空間 */
+            padding-top: 35px;
+            padding-bottom: 35px;
+            position: relative;
+        }
+
+        /* 使用虛擬元素 ::before 創建頂部圓點行 */
+        .bottom-box::before,
+        /* 使用虛擬元素 ::after 創建底部圓點行 */
+        .bottom-box::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 30px; /* 圓點行的高度 */
+            /* 使用徑向漸變繪製圓點 */
+            background-image: radial-gradient(circle, #808080 35%, transparent 40%);
+            /* 控制圓點的大小和水平間距 (40px) */
+            background-size: 40px 30px; 
+            background-repeat: repeat-x; /* 只在水平方向重複 */
+            background-position: center; /* 使點點居中 */
+        }
+
+        /* 定位頂部圓點行 */
+        .bottom-box::before {
+            top: 0;
+        }
+
+        /* 定位底部圓點行 */
+        .bottom-box::after {
+            bottom: 0;
         }
     </style>
 </head>
