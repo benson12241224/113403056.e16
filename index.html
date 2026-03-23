@@ -11,76 +11,50 @@
             flex-direction: column;
             align-items: center;
             padding: 50px;
-            gap: 25px; /* 控制框框之間的距離 */
-            background-color: #f0f4f8; /* 加上與原圖一致的淡灰藍背景 */
+            gap: 25px;
+            background-color: #f0f4f8;
         }
 
         .box {
-            width: 450px;
+            width: 500px;
             padding: 15px;
-            font-size: 26px; /* 稍微縮小字體，使其更精緻 */
+            font-size: 28px;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 加上陰影效果 */
-            position: relative; /* 這是為底部圓點定位所必需的 */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-sizing: border-box;
         }
 
-        /* 第一個：番茄紅雙線邊框 */
+        /* 1. 雙線邊框 */
         .top-box {
-            background-color: #add8e6; /* 淺藍背景 */
-            border: 6px double #ff6347; /* 番茄紅雙線 */
+            background-color: #add8e6;
+            border: 6px double #ff6347;
         }
 
-        /* 第二個：淺藍實線圓角邊框 */
+        /* 2. 淺藍實線圓角 */
         .middle-box {
-            background-color: #ffff00; /* 黃色背景 */
-            border: 4px solid #00bfff; /* 淺藍色實線 */
-            border-radius: 20px;       /* 大圓角效果 */
+            background-color: #ffff00;
+            border: 4px solid #00bfff;
+            border-radius: 20px;
         }
 
-        /* 第三個：灰色圓點邊框 + 綠色背景 */
+        /* 3. 完美圓點邊框 (四邊皆有點) */
         .bottom-box {
-            background-color: #57a673; /* 綠色背景 */
-            color: #000; /* 文字顏色 */
-            border: none; /* 移除標準 CSS 邊框 */
-            /* 增加上下內邊距，為圓點留出空間，並確保文字居中對齊 */
-            padding-top: 30px; 
-            padding-bottom: 30px;
+            background-color: #57a673;
+            color: #000;
+            border: none;
+            /* 調整 padding 以確保文字不會撞到點點，並讓高度剛好容納三個側點 */
+            padding: 35px 45px; 
             position: relative;
-        }
+            
+            /* 使用徑向漸變繪製圓點，並在四個邊重複 */
+            background-image: 
+                radial-gradient(circle, #808080 30%, transparent 35%), /* 頂部 */
+                radial-gradient(circle, #808080 30%, transparent 35%), /* 底部 */
+                radial-gradient(circle, #808080 30%, transparent 35%), /* 左側 */
+                radial-gradient(circle, #808080 30%, transparent 35%); /* 右側 */
 
-        /* 使用虛擬元素 ::before 創建頂部圓點行 */
-        .bottom-box::before,
-        /* 使用虛擬元素 ::after 創建底部圓點行 */
-        .bottom-box::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 30px; /* 圓點行的高度 */
-            /* 使用徑向漸變繪製灰色圓點 */
-            background-image: radial-gradient(circle, #808080 35%, transparent 40%);
-            /* 控制圓點的大小和水平間距 */
-            background-size: 40px 30px; 
-            background-repeat: repeat-x; /* 只在水平方向重複 */
-            background-position: center; /* 使圓點在水平方向居中 */
-        }
-
-        /* 將頂部圓點行定位在框框的最頂部 (top: 0) */
-        .bottom-box::before {
-            top: 0;
-        }
-
-        /* 將底部圓點行定位在框框的最底部 (bottom: 0) */
-        .bottom-box::after {
-            bottom: 0;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="box top-box">Hello World</div>
-    <div class="box middle-box">Hello World</div>
-    <div class="box bottom-box">Hello World</div>
-
-</body>
-</html>
+            background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+            
+            /* 控制圓點間距 */
+            background-size: 
+                40px 30px, /* 頂部：寬40px,
